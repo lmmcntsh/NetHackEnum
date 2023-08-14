@@ -1,0 +1,42 @@
+Roadmap for features and functionality
+
+
+COMPLETED
+
+
+PLANNED
+NETWORK AND SINGLE TARGET MODES
+    first argument will determine if you are working with one target or a network
+    default is single target but if "net" is specified then it will change to network mode
+NMAP SCANS
+    in depth and simple
+LIVE HOST SCANS
+    scan a network for live hosts
+
+WEB SCANS  
+    if target has website, run directory buster
+    take pictures of directories that are found
+
+VULNERABILITY SCANS
+    if we get a versions of softwares do a quick searchsploit for quick wins
+FILE STORAGE
+    tool should create a directory and all output will be stored in there
+HELP MENU
+    syntax help and functionality descriptions
+
+COLOR
+    add color based output
+
+
+
+
+
+syntax
+
+net : network scanning mode
+
+
+-A : ALL. Will do full scan with all functionality
+-t : target. Will be an IP address or range depending on the mode
+-o : output directory. Will be the name of the directory where all of this will be stored. Default will be "NHE-<IP>"
+
