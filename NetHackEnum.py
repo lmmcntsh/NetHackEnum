@@ -23,7 +23,7 @@ logo = """
 
 print(logo)
 
-#process variables
+#Declare variables
 net_mode = False
 target = " "
 output_dir = " "
@@ -32,6 +32,7 @@ output_dir = " "
 #config will take the arguments and assign variables as needed before any actions are taken
 def config():
 
+    #Accessing necessary variables
     global net_mode
     global target
     global output_dir
@@ -81,12 +82,13 @@ def config():
         parser.print_help()
 
 
-
+    #Will set the output directory name to the one specified or the default NHE-IP
     if args.output:
         output_dir = args.output
     else:
         output_dir = "NHE-" + target
 
+    
         
     
 
