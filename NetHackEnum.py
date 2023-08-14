@@ -24,21 +24,35 @@ print(logo)
 
 #process variables
 net_mode = False
-
+target = " "
 
 #config will take the arguments and assign variables as needed before any actions are taken
 def config():
+
+    global net_mode
+    global target
+
     parser = argparse.ArgumentParser(description="NetHackEnum")
-    parser.add_argument('--net', help= 'test')
 
+    parser.add_argument('net', nargs='?',
+                        help= 'Sets tool to network mode, for scanning a network range rather than a single target')
+    
+    parser.add_argument('-t', metavar='--target', dest='target')
 
+    #will take all the arguments for accessing
     args = parser.parse_args()
 
     if args.net:
         net_mode = True
         print('[!] Network Mode')
     else:
-         print('[!] Single Target Mode')  
+         net_mode = False
+         print('[!] Single Target Mode')
+
+    if 
+
+    target = args.target
 
 
 config()
+print(target)
