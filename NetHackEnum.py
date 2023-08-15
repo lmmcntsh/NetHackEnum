@@ -1,3 +1,5 @@
+#!/bin/python3
+
 #import modules
 import os
 import sys
@@ -85,11 +87,27 @@ def config():
     #Will set the output directory name to the one specified or the default NHE-IP
     if args.output:
         output_dir = args.output
+    
     else:
         output_dir = "NHE-" + target
 
+    os.system('mkdir {}'.format(output_dir))
+
+
+    os.system('cd {}'.format(output_dir))
+
     
-        
+
+#will simply scan one target for open ports
+def single_nmap_simple_scan():
+
+    print('\n-----NMAP SCAN-----\n')
+    print('[+] Beginning simple Nmap scan. . . ')
+    os.system('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir))
+    print('[+] Nmap scan results stored in {} directory'.format(output_dir))
+
+
+
     
 
 
@@ -97,3 +115,4 @@ def config():
 config()
 print(target)
 print(output_dir)
+single_nmap_simple_scan()
