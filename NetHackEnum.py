@@ -31,6 +31,10 @@ target = " "
 output_dir = " "
 
 
+
+#check_tools will check the system to ensure it has the necessary tools
+def check_tools():
+
 #config will take the arguments and assign variables as needed before any actions are taken
 def config():
 
@@ -105,6 +109,16 @@ def single_nmap_simple_scan():
     print('[+] Beginning simple Nmap scan. . . ')
     os.system('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir))
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
+
+
+def net_host_scan():
+    print('\n-----NMAP LIVE HOST SCAN-----\n')
+    print('[+] Scanning for live hosts. . . ')
+    os.system('echo nmap -sn {} -nO {}/live_hosts'.format(target))
+    print('[+] Live hosts stored in {} directory'.format(output_dir))
+
+
+
 
 
 
