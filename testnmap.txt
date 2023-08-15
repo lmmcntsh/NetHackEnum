@@ -1,3 +1,5 @@
+#FROM AttacktiveDirectory on TRYHACKME
+
 # Nmap 7.93 scan initiated Wed Jul 19 13:08:22 2023 as: nmap -sV -A -p- -o nmap.txt 10.10.93.74
 Nmap scan report for 10.10.93.74
 Host is up (0.10s latency).
