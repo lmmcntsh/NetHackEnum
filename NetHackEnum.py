@@ -5,6 +5,7 @@ import os
 import sys
 import argparse
 import re
+import subprocess
 
 
 logo = """
@@ -32,11 +33,27 @@ net_mode = False
 target = " "
 output_dir = " "
 
+#checks if nmap is installed
+def nmap_check():
+    
+    command = ['nmap', '--version']
+    try:
+        #Will run the command to check nmap's version (aka prove if its installed or not)
+        subprocess.run(command, capture_output=True, text=True)
+        
+        print('[!] Nmap is installed')
+
+    except subprocess.CalledProcessError as ex:
+        print('[!] Nmap is not installed')
+
 
 
 #check_tools will check the system to ensure it has the necessary tools
 def check_tools():
-    print("hi")
+    print('[!] Checking for necessary tools. . . ')
+
+
+
 
 #config will take the arguments and assign variables as needed before any actions are taken
 def config():
@@ -61,6 +78,7 @@ def config():
     #will take all the arguments for accessing
     args = parser.parse_args()
 
+    #will check which mode to run the tool in (net or single mode)
     if args.net:
         net_mode = True
         print('[!] Network Mode')
@@ -109,8 +127,21 @@ def single_nmap_simple_scan():
 
     print('\n-----NMAP SCAN-----\n')
     print('[+] Beginning simple Nmap scan. . . ')
-    os.system('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir))
+    output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
+    
+    """ with open('{}/simple_nmap_scan'.format{}output_dir) as file:
+        output = file.read() """
+
+    with open('testnmap.txt') as file:
+        output = file.read()
+    open_ports =  re.findall(r"\b(\d+)\/(?:tcp|udp)\s+open\b", output)
+    for port in open_ports:
+        print(port)
+
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
+    print(output.stdout)
+
+
 
 #Will scan network for live hosts
 def net_host_scan():
@@ -123,9 +154,17 @@ def net_host_scan():
 
 
 
-
     
+if __name__ == '__main__':
+    config()
 
+    #script path for single target mode
+    if net_mode == True:
+        net_host_scan()
+
+
+    elif net_mode == False:
+        single_nmap_simple_scan()
 
 
 config()
