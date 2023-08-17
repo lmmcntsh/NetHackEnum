@@ -1,5 +1,5 @@
 #!/bin/python3
-
+#UPDATED AUGUST 16
 #import modules
 import os
 import sys
@@ -34,6 +34,7 @@ output_dir = " "
 
 #check_tools will check the system to ensure it has the necessary tools
 def check_tools():
+    print("hi")
 
 #config will take the arguments and assign variables as needed before any actions are taken
 def config():
