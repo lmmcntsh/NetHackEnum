@@ -2,32 +2,35 @@ Roadmap for features and functionality
 
 
 COMPLETED
-
-
-PLANNED
-NETWORK AND SINGLE TARGET MODES
+*NETWORK AND SINGLE TARGET MODES
     first argument will determine if you are working with one target or a network
     default is single target but if "net" is specified then it will change to network mode
-NMAP SCANS
+
+PLANNED NEAR FUTURE
+
+*NMAP SCANS
     in depth and simple
-LIVE HOST SCANS
+*LIVE HOST SCANS
     scan a network for live hosts
 
-WEB SCANS  
+*WEB SCANS  
     if target has website, run directory buster
     take pictures of directories that are found
 
-VULNERABILITY SCANS
+*VULNERABILITY SCANS
     if we get a versions of softwares do a quick searchsploit for quick wins
-FILE STORAGE
+*FILE STORAGE
     tool should create a directory and all output will be stored in there
-HELP MENU
+*HELP MENU
     syntax help and functionality descriptions
 
-COLOR
+*COLOR
     add color based output
 
+LONG TERM PLANS
 
+*LOTL functionality
+    be able to do certain enumeration using python code only. no reliance on other tools like nmap 
 
 
 
