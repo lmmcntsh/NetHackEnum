@@ -111,7 +111,7 @@ def single_nmap_simple_scan():
     os.system('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir))
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
 
-
+#Will scan network for live hosts
 def net_host_scan():
     print('\n-----NMAP LIVE HOST SCAN-----\n')
     print('[+] Scanning for live hosts. . . ')
