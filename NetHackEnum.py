@@ -1,3 +1,5 @@
+#!/bin/python3
+#UPDATED AUGUST 16
 #import modules
 import os
 import sys
@@ -30,6 +32,11 @@ net_mode = False
 target = " "
 output_dir = " "
 
+
+
+#check_tools will check the system to ensure it has the necessary tools
+def check_tools():
+    print("hi")
 
 #config will take the arguments and assign variables as needed before any actions are taken
 def config():
@@ -86,16 +93,9 @@ def config():
     #Will set the output directory name to the one specified or the default NHE-IP
     if args.output:
         output_dir = args.output
-        
+    
     else:
         output_dir = "NHE-" + target
-
-
-
-def hostsweep():
-    print('[+] Scanning IP range for live hosts using nmap. . .')
-    
-
 
     
         
@@ -106,3 +106,4 @@ def hostsweep():
 config()
 print(target)
 print(output_dir)
+single_nmap_simple_scan()
