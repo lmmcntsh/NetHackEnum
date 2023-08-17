@@ -19,6 +19,8 @@ logo = """
   / __/ / __ \/ / / / __ `__ \  
  / /___/ / / / /_/ / / / / / /  
 /_____/_/ /_/\__,_/_/ /_/ /_/   
+
+
 """
 
 print(logo)
@@ -60,7 +62,6 @@ def config():
         print('[!] Single Target Mode')
 
     if args.target:
-
         #Takes the target specified and ensures its a proper IP Address or range (based on net_mode or not)
         target = args.target
         if net_mode == True:
@@ -85,8 +86,16 @@ def config():
     #Will set the output directory name to the one specified or the default NHE-IP
     if args.output:
         output_dir = args.output
+        
     else:
         output_dir = "NHE-" + target
+
+
+
+def hostsweep():
+    print('[+] Scanning IP range for live hosts using nmap. . .')
+    
+
 
     
         
