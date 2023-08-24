@@ -1,5 +1,5 @@
 #!/bin/python3
-#UPDATED AUGUST 16
+#UPDATED AUGUST 23
 #import modules
 import os
 import sys
@@ -33,6 +33,7 @@ net_mode = False
 target = " "
 output_dir = " "
 
+
 #checks if nmap is installed
 def nmap_check():
     
@@ -51,7 +52,7 @@ def nmap_check():
 #check_tools will check the system to ensure it has the necessary tools
 def check_tools():
     print('[!] Checking for necessary tools. . . ')
-
+    nmap_check()
 
 
 
@@ -62,6 +63,7 @@ def config():
     global net_mode
     global target
     global output_dir
+    
 
     parser = argparse.ArgumentParser(description="NetHackEnum")
 
@@ -125,22 +127,65 @@ def config():
 #will simply scan one target for open ports
 def single_nmap_simple_scan():
 
-    print('\n-----NMAP SCAN-----\n')
+    print('\n-----NMAP PORT SCAN-----\n')
     print('[+] Beginning simple Nmap scan. . . ')
-    output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
-    
-    """ with open('{}/simple_nmap_scan'.format{}output_dir) as file:
-        output = file.read() """
-
-    with open('testnmap.txt') as file:
-        output = file.read()
-    open_ports =  re.findall(r"\b(\d+)\/(?:tcp|udp)\s+open\b", output)
-    for port in open_ports:
-        print(port)
+    #output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
+    os.system('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target, output_dir))
 
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
-    print(output.stdout)
+    
 
+#Will read nmap output file and return which ports were found open on the machine
+def nmap_open_ports():
+    #NOTE CHANGE THE FILE TO THE VARIABLE AFTER THE TEST
+    with open('testnmap.txt') as file:
+        output = file.read()
+    global open_ports
+    open_ports =  re.findall(r"\b(\d+)\/(?:tcp|udp)\s+open\b", output)
+    
+    file.close()
+
+#Will read the deeper nmap output file and return the ports and their version information
+def nmap_port_info():
+    print('\n-----PORT INFORMATION: {} -----\n'.format(target))
+    print('PORT     SERVICE     VERSION')
+    port_lines = []
+    with open('testnmap.txt') as f:
+        
+        file = f.readlines()
+    
+        #takes every line from the file and if it has an open port it will be saved to port_lines
+        for line in file:
+            for port in open_ports:
+                if port in line:
+                    port_lines.append(line.rstrip('\n'))
+                    break
+        
+        
+        #will print out the port and the corresponding info
+        port_info = []
+        for line, port in zip(port_lines, open_ports):
+            words = line.split()
+            words.remove(words[0])
+            words.remove('open')
+            result = ' '.join(words)
+            port_info.append(result)
+        for port, info in zip(open_ports, port_info):
+                print('{:<8}    {}'.format(port, info))
+        
+        f.close()
+        
+
+
+
+
+
+
+def deep_nmap_scan():
+    print('\n-----DEEP VERSION SCAN-----\n')
+    print('[+] Diving deeper on open ports. . . ')
+    os.system('echo nmap -p {} -sV {} -nO {}/deep_nmap_scan'.format(open_ports, target, output_dir))
+    print('[+] ')
 
 
 #Will scan network for live hosts
@@ -151,8 +196,17 @@ def net_host_scan():
     print('[+] Live hosts stored in {} directory'.format(output_dir))
 
 
+#Will check to see if port 80 or 443 is open, and will attempt basic directory enumeration
+def directory_enum():
+    print('\n-----DIRECTORY ENUMERATION-----\n')
+    if "80" or "443" in open_ports:
+        print('[+] Webserver found. . . ')
 
 
+
+
+    else:
+        print('[!] No Webserver found on target (Both port 80 and 443 are not open)')
 
     
 if __name__ == '__main__':
@@ -165,9 +219,7 @@ if __name__ == '__main__':
 
     elif net_mode == False:
         single_nmap_simple_scan()
+        nmap_open_ports()
 
 
-config()
-print(target)
-print(output_dir)
-single_nmap_simple_scan()
+nmap_port_info()
