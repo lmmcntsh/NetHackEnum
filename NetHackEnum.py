@@ -29,6 +29,7 @@ logo = """
 print(logo)
 
 #Declare variables
+toolset = False
 net_mode = False
 target = " "
 output_dir = " "
@@ -44,7 +45,7 @@ def nmap_check():
         
         print('[!] Nmap is installed')
 
-    except subprocess.CalledProcessError as ex:
+    except:
         print('[!] Nmap is not installed')
 
 
@@ -53,6 +54,12 @@ def nmap_check():
 def check_tools():
     print('[!] Checking for necessary tools. . . ')
     nmap_check()
+
+    if toolset == False:
+        print('[!] Please install necessary tools')
+        exit()
+    else:
+        print('[+] Toolset installed')
 
 
 
@@ -138,7 +145,7 @@ def single_nmap_simple_scan():
 #Will read nmap output file and return which ports were found open on the machine
 def nmap_open_ports():
     #NOTE CHANGE THE FILE TO THE VARIABLE AFTER THE TEST
-    with open('testnmap.txt') as file:
+    with open('{}/simple_nmap_scan'.format(output_dir)) as file:
         output = file.read()
     global open_ports
     open_ports =  re.findall(r"\b(\d+)\/(?:tcp|udp)\s+open\b", output)
@@ -150,7 +157,7 @@ def nmap_port_info():
     print('\n-----PORT INFORMATION: {} -----\n'.format(target))
     print('PORT     SERVICE     VERSION')
     port_lines = []
-    with open('testnmap.txt') as f:
+    with open('{}/simple_nmap_scan') as f:
         
         file = f.readlines()
     
@@ -210,6 +217,7 @@ def directory_enum():
 
     
 if __name__ == '__main__':
+    check_tools()
     config()
 
     #script path for single target mode
@@ -218,8 +226,8 @@ if __name__ == '__main__':
 
 
     elif net_mode == False:
-        single_nmap_simple_scan()
-        nmap_open_ports()
-
-
-nmap_port_info()
+        try:
+            single_nmap_simple_scan()
+            #nmap_open_ports()
+        except KeyboardInterrupt:
+            print('-----KEYBOARD INTERRUPT-----')
