@@ -1,1 +1,5 @@
 # NetHackEnum
+
+
+
+**NOTE** CURENTLY IN PROGRESS< NOT WORKING YET >
