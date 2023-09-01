@@ -146,7 +146,7 @@ def single_nmap_simple_scan():
     print('\n-----NMAP PORT SCAN-----\n')
     print('[+] Beginning simple Nmap scan. . . ')
     #output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
-    os.system('nmap {} -p- -oN {}/simple_nmap_scan'.format(target, output_dir))
+    os.system('nmap {} -p- -oN {}/simple_nmap_scan > /dev/null 2>&1'.format(target, output_dir))
 
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
     
@@ -200,7 +200,7 @@ def nmap_port_info():
 def deep_nmap_scan():
     print('\n-----DEEP VERSION SCAN-----\n')
     print('[+] Diving deeper on open ports. . . ')
-    os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan'.format(open_ports, target, output_dir))
+    os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan > /dev/null 2>&1'.format(open_ports, target, output_dir))
     print('[+] ')
 
 
