@@ -44,7 +44,7 @@ def nmap_check():
         #Will run the command to check nmap's version (aka prove if its installed or not)
         subprocess.run(command, capture_output=True, text=True)
         
-        print('[!] Nmap is installed')
+        print('[!] Nmap is installed. . . ')
         tools.append('1')
 
     except:
@@ -146,7 +146,7 @@ def single_nmap_simple_scan():
     print('\n-----NMAP PORT SCAN-----\n')
     print('[+] Beginning simple Nmap scan. . . ')
     #output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
-    os.system('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target, output_dir))
+    os.system('nmap {} -p- -nO {}/simple_nmap_scan'.format(target, output_dir))
 
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
     
@@ -200,7 +200,7 @@ def nmap_port_info():
 def deep_nmap_scan():
     print('\n-----DEEP VERSION SCAN-----\n')
     print('[+] Diving deeper on open ports. . . ')
-    os.system('echo nmap -p {} -sV {} -nO {}/deep_nmap_scan'.format(open_ports, target, output_dir))
+    os.system('nmap -p {} -sV {} -nO {}/deep_nmap_scan'.format(open_ports, target, output_dir))
     print('[+] ')
 
 
@@ -208,7 +208,7 @@ def deep_nmap_scan():
 def net_host_scan():
     print('\n-----NMAP LIVE HOST SCAN-----\n')
     print('[+] Scanning for live hosts. . . ')
-    os.system('echo nmap -sn {} -nO {}/live_hosts'.format(target))
+    os.system('nmap -sn {} -nO {}/live_hosts'.format(target))
     print('[+] Live hosts stored in {} directory'.format(output_dir))
 
 
@@ -224,7 +224,9 @@ def directory_enum():
     else:
         print('[!] No Webserver found on target (Both port 80 and 443 are not open)')
 
-    
+
+
+
 if __name__ == '__main__':
     check_tools()
     config()
@@ -237,6 +239,6 @@ if __name__ == '__main__':
     elif net_mode == False:
         try:
             single_nmap_simple_scan()
-            #nmap_open_ports()
+            nmap_open_ports()
         except KeyboardInterrupt:
             print('-----KEYBOARD INTERRUPT-----')
