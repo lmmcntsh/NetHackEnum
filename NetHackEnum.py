@@ -29,6 +29,7 @@ logo = """
 print(logo)
 
 #Declare variables
+tools = []
 toolset = False
 net_mode = False
 target = " "
@@ -44,8 +45,10 @@ def nmap_check():
         subprocess.run(command, capture_output=True, text=True)
         
         print('[!] Nmap is installed')
+        tools.append('1')
 
     except:
+        tools.append('0')
         print('[!] Nmap is not installed')
 
 
@@ -55,6 +58,12 @@ def check_tools():
     print('[!] Checking for necessary tools. . . ')
     nmap_check()
 
+    if '0' in tools:
+        toolset = False
+    else:
+        toolset = True
+
+    
     if toolset == False:
         print('[!] Please install necessary tools')
         exit()
