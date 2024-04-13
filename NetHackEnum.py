@@ -132,12 +132,28 @@ def config():
     
     else:
         output_dir = "NHE-" + target
+    # Check if the directory exists
+    if os.path.isdir(output_dir):
+        print(f"Directory '{output_dir}' successfully created.")
+    else:
+        print(f"Failed to create directory '{output_dir}'.")
+        sys.exit()
 
-    os.system('mkdir {}'.format(output_dir))
+    # Give the user an option to overwrite or cancel
+    while True:
+        overwrite_choice = input(f"The directory '{output_dir}' already exists. Do you want to overwrite it? (yes/no): ")
+        if overwrite_choice.lower() == 'yes':
+            os.system('rm -r {}'.format(output_dir))  # Remove existing directory
+            os.system('mkdir {}'.format(output_dir))  # Recreate directory if user chooses to overwrite
+            break
+        elif overwrite_choice.lower() == 'no':
+            print("Operation canceled. Exiting...")
+            sys.exit()
+        else:
+            print("Invalid choice. Please enter 'yes' to overwrite or 'no' to cancel.")
+        
 
-
-    os.system('cd {}'.format(output_dir))
-
+    
     
 
 #will simply scan one target for open ports
