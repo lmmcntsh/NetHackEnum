@@ -115,7 +115,7 @@ def config():
                 print('[!] INVALID TARGET')
                 parser.print_help()
         else:
-            pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$'
+            pattern = r'^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$' #REGEX to see if the IP address is proper
             if re.match(pattern, target):
                 print('[!] Valid target')
             else:
@@ -146,20 +146,23 @@ def single_nmap_simple_scan():
     print('\n-----NMAP PORT SCAN-----\n')
     print('[+] Beginning simple Nmap scan. . . ')
     #output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
-    os.system('nmap {} -p- -oN {}/simple_nmap_scan > /dev/null 2>&1'.format(target, output_dir))
+    os.system('nmap {} -p- -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
 
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
     
 
 #Will read nmap output file and return which ports were found open on the machine
 def nmap_open_ports():
+    print('[+] Peeping open ports. . .')
     #NOTE CHANGE THE FILE TO THE VARIABLE AFTER THE TEST
-    with open('{}/simple_nmap_scan'.format(output_dir)) as file:
+    with open('{}/simple_nmap_scan.txt'.format(output_dir)) as file:
         output = file.read()
     global open_ports
     open_ports =  re.findall(r"\b(\d+)\/(?:tcp|udp)\s+open\b", output)
     
     file.close()
+
+
 
 #Will read the deeper nmap output file and return the ports and their version information
 def nmap_port_info():
@@ -227,6 +230,39 @@ def directory_enum():
 
 
 
+
+#### DISPLAY FUNCTIONS ####
+#Sole purpose is for displaying the information found, but pretty lmao
+        
+def list_open_ports():
+    print('--> OPEN PORTS <--')
+    for port in open_ports:
+        print(f'{port}')
+
+
+#CLUSTER FUNCTIONS
+#These functions combine smaller functions from above to make them easier to run (all nmap functions working in tandem for example)
+
+def single_target_nmap_full():
+    #will do the basic nmap scan
+    single_nmap_simple_scan()
+
+    #takes the basic scan and retrieves the open ports only
+    nmap_open_ports()
+
+
+    #will take only the open ports and run a deeper scan on them
+    #deep_nmap_scan()
+
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     check_tools()
     config()
@@ -238,7 +274,6 @@ if __name__ == '__main__':
 
     elif net_mode == False:
         try:
-            single_nmap_simple_scan()
-            nmap_open_ports()
+            single_target_nmap_full()
         except KeyboardInterrupt:
             print('-----KEYBOARD INTERRUPT-----')
