@@ -5,13 +5,15 @@ COMPLETED
 *NETWORK AND SINGLE TARGET MODES
     first argument will determine if you are working with one target or a network
     default is single target but if "net" is specified then it will change to network mode
-
-PLANNED NEAR FUTURE
-
 *NMAP SCANS
     in depth and simple
 *LIVE HOST SCANS
     scan a network for live hosts
+
+
+
+PLANNED NEAR FUTURE
+
 
 *WEB SCANS  
     if target has website, run directory buster
