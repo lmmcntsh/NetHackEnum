@@ -266,6 +266,7 @@ def single_target_nmap_full():
     #takes the basic scan and retrieves the open ports only
     nmap_open_ports()
 
+    list_open_ports()
 
     #will take only the open ports and run a deeper scan on them
     #deep_nmap_scan()
