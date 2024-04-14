@@ -219,7 +219,8 @@ def nmap_port_info():
 def deep_nmap_scan():
     print('\n-----DEEP VERSION SCAN-----\n')
     print('[+] Diving deeper on open ports. . . ')
-    os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan > /dev/null 2>&1'.format(open_ports, target, output_dir))
+    open_ports_str = ' '.join(map(str, open_ports))
+    os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan > /dev/null 2>&1'.format(open_ports_str, target, output_dir))
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
 
 
