@@ -220,7 +220,7 @@ def deep_nmap_scan():
     print('\n-----DEEP VERSION SCAN-----\n')
     print('[+] Diving deeper on open ports. . . ')
     os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan > /dev/null 2>&1'.format(open_ports, target, output_dir))
-    print('[+] ')
+    print('[+] Nmap scan results stored in {} directory'.format(output_dir))
 
 
 #Will scan network for live hosts
@@ -269,7 +269,7 @@ def single_target_nmap_full():
     list_open_ports()
 
     #will take only the open ports and run a deeper scan on them
-    #deep_nmap_scan()
+    deep_nmap_scan()
 
 
 
