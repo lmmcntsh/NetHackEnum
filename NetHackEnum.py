@@ -215,12 +215,11 @@ def nmap_port_info():
 
 
 
-
 def deep_nmap_scan():
     print('\n-----DEEP VERSION SCAN-----\n')
     print('[+] Diving deeper on open ports. . . ')
     open_ports_str = ','.join(map(str, open_ports))
-    os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan > /dev/null 2>&1'.format(open_ports_str, target, output_dir))
+    os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan.txt > /dev/null 2>&1'.format(open_ports_str, target, output_dir))
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
 
 
@@ -257,6 +256,27 @@ def list_open_ports():
         print(f'{port}')
 
 
+def list_service_info():
+    # Define the start and end markers for the section to extract
+    start_marker = "Host is up"
+    end_marker = "Service detection performed"
+
+    # Flag to indicate whether to print lines within the desired section
+    printing = False
+
+    # Read the file and print the desired section
+    with open('your_file_path.txt', 'r') as file:
+        for line in file:
+            # Check if the start marker is found in the line
+            if start_marker in line:
+                printing = True
+            # Check if the end marker is found in the line
+            elif end_marker in line:
+                break  # Stop printing when the end marker is found
+            # Print the line if the printing flag is True
+            if printing:
+                print(line.strip())
+
 #CLUSTER FUNCTIONS
 #These functions combine smaller functions from above to make them easier to run (all nmap functions working in tandem for example)
 
@@ -271,6 +291,9 @@ def single_target_nmap_full():
 
     #will take only the open ports and run a deeper scan on them
     deep_nmap_scan()
+    
+    #show the service information
+    list_service_info()
 
 
 
@@ -293,7 +316,7 @@ if __name__ == '__main__':
     elif net_mode == False:
         try:
             single_target_nmap_full()
-            print(open_ports)
+            
             
         except KeyboardInterrupt:
             print('-----KEYBOARD INTERRUPT-----')
