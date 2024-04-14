@@ -219,7 +219,7 @@ def nmap_port_info():
 def deep_nmap_scan():
     print('\n-----DEEP VERSION SCAN-----\n')
     print('[+] Diving deeper on open ports. . . ')
-    open_ports_str = ' '.join(map(str, open_ports))
+    open_ports_str = ','.join(map(str, open_ports))
     os.system('nmap -p {} -sV {} -oN {}/deep_nmap_scan > /dev/null 2>&1'.format(open_ports_str, target, output_dir))
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
 
@@ -294,5 +294,6 @@ if __name__ == '__main__':
         try:
             single_target_nmap_full()
             print(open_ports)
+            
         except KeyboardInterrupt:
             print('-----KEYBOARD INTERRUPT-----')
