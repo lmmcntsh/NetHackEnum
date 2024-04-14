@@ -292,5 +292,6 @@ if __name__ == '__main__':
     elif net_mode == False:
         try:
             single_target_nmap_full()
+            print(open_ports)
         except KeyboardInterrupt:
             print('-----KEYBOARD INTERRUPT-----')
