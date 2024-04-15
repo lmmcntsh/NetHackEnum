@@ -148,6 +148,11 @@ def config():
             else:
                 print("Invalid choice. Please enter 'y' to overwrite or 'n' to cancel.")
         
+    # If the directory doesn't exist then it's created automatically
+    else:
+        os.system('mkdir {}'.format(output_dir))
+
+        
     # Check if the directory exists
     if os.path.isdir(output_dir):
         print(f"Directory '{output_dir}' successfully created.")
