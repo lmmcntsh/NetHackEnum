@@ -133,19 +133,20 @@ def config():
     else:
         output_dir = "NHE-" + target
 
-
-    # Give the user an option to overwrite or cancel
-    while True:
-        overwrite_choice = input(f"The directory '{output_dir}' already exists. Do you want to overwrite it? (y/n): ")
-        if overwrite_choice.lower() == 'y':
-            os.system('rm -r {}'.format(output_dir))  # Remove existing directory
-            os.system('mkdir {}'.format(output_dir))  # Recreate directory if user chooses to overwrite
-            break
-        elif overwrite_choice.lower() == 'n':
-            print("Operation canceled. Exiting...")
-            sys.exit()
-        else:
-            print("Invalid choice. Please enter 'y' to overwrite or 'n' to cancel.")
+    # Check if the directory exists
+    if os.path.isdir(output_dir):
+        # Give the user an option to overwrite or cancel
+        while True:
+            overwrite_choice = input(f"The directory '{output_dir}' already exists. Do you want to overwrite it? (y/n): ")
+            if overwrite_choice.lower() == 'y':
+                os.system('rm -r {}'.format(output_dir))  # Remove existing directory
+                os.system('mkdir {}'.format(output_dir))  # Recreate directory if user chooses to overwrite
+                break
+            elif overwrite_choice.lower() == 'n':
+                print("Operation canceled. Exiting...")
+                sys.exit()
+            else:
+                print("Invalid choice. Please enter 'y' to overwrite or 'n' to cancel.")
         
     # Check if the directory exists
     if os.path.isdir(output_dir):
@@ -265,7 +266,7 @@ def list_service_info():
     printing = False
 
     # Read the file and print the desired section
-    with open('your_file_path.txt', 'r') as file:
+    with open(f'{output_dir}/deep_nmap_scan.txt', 'r') as file:
         for line in file:
             # Check if the start marker is found in the line
             if start_marker in line:
