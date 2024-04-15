@@ -132,12 +132,7 @@ def config():
     
     else:
         output_dir = "NHE-" + target
-    # Check if the directory exists
-    if os.path.isdir(output_dir):
-        print(f"Directory '{output_dir}' successfully created.")
-    else:
-        print(f"Failed to create directory '{output_dir}'.")
-        sys.exit()
+
 
     # Give the user an option to overwrite or cancel
     while True:
@@ -152,7 +147,12 @@ def config():
         else:
             print("Invalid choice. Please enter 'y' to overwrite or 'n' to cancel.")
         
-
+    # Check if the directory exists
+    if os.path.isdir(output_dir):
+        print(f"Directory '{output_dir}' successfully created.")
+    else:
+        print(f"Failed to create directory '{output_dir}'.")
+        sys.exit()
     
     
 
