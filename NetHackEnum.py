@@ -32,6 +32,7 @@ print(logo)
 tools = []
 toolset = False
 net_mode = False
+quick_mode = False
 target = " "
 output_dir = " "
 
@@ -77,6 +78,7 @@ def config():
 
     #Accessing necessary variables
     global net_mode
+    global quick_mode
     global target
     global output_dir
     
@@ -92,6 +94,8 @@ def config():
     parser.add_argument('-o', nargs='?', metavar='--output', dest='output', 
                         help= 'Sets the name of the output directory. Default will be "NHE-<IP ADDRESS>"')
     
+    parser.add_argument('-q', nargs='?', metavar='--quick', dest='quick_mode',
+                        help='Enum will be less detailed (Ex. nmap will scan default top 1000 ports instead of all). Not including this will have scans be detailed by default.')
 
     #will take all the arguments for accessing
     args = parser.parse_args()
@@ -103,6 +107,11 @@ def config():
     else:
         net_mode = False
         print('[!] Single Target Mode')
+    if args.quick_mode:
+        quick_mode = True
+        print('[!] Quick mode')
+    else:
+        quick_mode = False
 
     if args.target:
         #Takes the target specified and ensures its a proper IP Address or range (based on net_mode or not)
@@ -167,8 +176,11 @@ def single_nmap_simple_scan():
 
     print('\n-----NMAP PORT SCAN-----\n')
     print('[+] Beginning simple Nmap scan. . . ')
-    #output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
-    os.system('nmap {} -p- -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
+    if quick_mode == True:
+        os.system('nmap {} -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
+    else:
+        #output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
+        os.system('nmap {} -p- -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
 
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
     
