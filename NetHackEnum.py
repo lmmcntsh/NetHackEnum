@@ -32,7 +32,7 @@ print(logo)
 tools = []
 toolset = False
 net_mode = False
-quick_mode = False
+deep_mode = False
 target = " "
 output_dir = " "
 
@@ -78,7 +78,7 @@ def config():
 
     #Accessing necessary variables
     global net_mode
-    global quick_mode
+    global deep_mode
     global target
     global output_dir
     
@@ -107,7 +107,7 @@ def config():
     else:
         net_mode = False
         print('[!] Single Target Mode')
-    if args.quick_mode:
+    if args.deep_mode:
         deep_mode = True
         print('[!] Deep mode')
     else:
