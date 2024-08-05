@@ -94,8 +94,8 @@ def config():
     parser.add_argument('-o', nargs='?', metavar='--output', dest='output', 
                         help= 'Sets the name of the output directory. Default will be "NHE-<IP ADDRESS>"')
     
-    parser.add_argument('-q', nargs='?', metavar='--quick', dest='quick_mode',
-                        help='Enum will be less detailed (Ex. nmap will scan default top 1000 ports instead of all). Not including this will have scans be detailed by default.')
+    parser.add_argument('-d', nargs='?', metavar='--deep', dest='deep_mode',
+                        help='Enum will be more detailed (Ex. nmap will scan all ports instead of just the top 1000).')
 
     #will take all the arguments for accessing
     args = parser.parse_args()
@@ -108,10 +108,11 @@ def config():
         net_mode = False
         print('[!] Single Target Mode')
     if args.quick_mode:
-        quick_mode = True
-        print('[!] Quick mode')
+        deep_mode = True
+        print('[!] Deep mode')
     else:
-        quick_mode = False
+        print('[!] Quick mode')
+        Deep_mode = False
 
     if args.target:
         #Takes the target specified and ensures its a proper IP Address or range (based on net_mode or not)
@@ -176,11 +177,11 @@ def single_nmap_simple_scan():
 
     print('\n-----NMAP PORT SCAN-----\n')
     print('[+] Beginning simple Nmap scan. . . ')
-    if quick_mode == True:
-        os.system('nmap {} -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
+    if deep_mode == True:
+        os.system('nmap {} -p- -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
     else:
         #output = subprocess.run('echo nmap {} -p- -nO {}/simple_nmap_scan'.format(target,output_dir), capture_output=True, text=True)
-        os.system('nmap {} -p- -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
+        os.system('nmap {} -oN {}/simple_nmap_scan.txt > /dev/null 2>&1'.format(target, output_dir))
 
     print('[+] Nmap scan results stored in {} directory'.format(output_dir))
     
